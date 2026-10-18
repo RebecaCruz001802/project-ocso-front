@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Input, Button } from "@nextui-org/react";
 import axios from "axios";
-const API_URL = "http://127.0.0.1:4000";
+const API_URL = 'http://localhost:4000';
 export default function LoginPage() {
 const handleSubmit = async (e : React.FormEvent) => {
 e.preventDefault()
@@ -13,6 +13,8 @@ authData.userPassword = formData.get("userPassword");
 
 const { data } = await axios.post(`${API_URL}/auth/login`, {
 ...authData
+}, {
+  withCredentials:true,
 });
 console.log(data);
 return;

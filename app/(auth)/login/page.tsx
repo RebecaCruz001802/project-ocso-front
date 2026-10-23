@@ -9,7 +9,7 @@ export default function LoginPage() {
   
 
 const [submitting, setSubmitting] = useState(false)
-const router = useRouter()
+const router =  useRouter()
 const handleSubmit = async (e : React.FormEvent) => {
   setSubmitting(true);
 e.preventDefault()
@@ -18,14 +18,13 @@ let authData: any = {};
 authData.userEmail = formData.get("userEmail");
 authData.userPassword = formData.get("userPassword");
 try {
-const response = await axios.post(`${API_URL}/auth/login`, {
-...authData
-}, {
-  withCredentials:true,
-});
+const response = await axios.post(`${API_URL}/auth/login`, { ...authData }, { withCredentials: true });
+
+
 if (response.status === 201) router.push('/dashboard')
 setSubmitting(false)
 }catch (e) {
+   
   setSubmitting(false);
 }
 

@@ -1,9 +1,13 @@
-import Image from "next/image";
+import { NextRequest, NextResponse } from "next/server";
 
-export default function Home() {
-  return (
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        El mejor texto 
-      </main>
-  );
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
+
+  if (req.nextUrl.pathname.startsWith("/dashboard") && !token) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+  
+  return NextResponse.next();
 }
+
+export const config = { matcher: ["/dashboard/:path*"] };

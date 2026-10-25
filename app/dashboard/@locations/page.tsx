@@ -1,4 +1,3 @@
-import axios from "axios";
 import { cookies } from "next/headers";
 import { Location } from "../../../entities";
 import SelectLocation from "../_components/SelectLocation";
@@ -8,25 +7,25 @@ import { API_URL } from "@/constants";
 import DeleteLocationButton from "../_components/DeleteLocationButton";
 import { AuthHeaders } from "@/helpers/authHeaders";
 
-const TOKEN_NAME = "token";
-
 const LocationsPage = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const { store } = await searchParams;
-
-  const { data } = await axios.get<Location[]>(
+  const response = await fetch(
     `${API_URL}/locations`,
     {
       headers: {
-        ...(await AuthHeaders()),
+        ...(await AuthHeaders())
       },
+      next: {
+        tags: ["dashboard:locations"]
+      }
     }
   );
-
-  const locations: Location[] = [
+  let data: Location[] = await response.json()
+  data = [
     {
       locationId: 0,
       locationName: "Ninguna",

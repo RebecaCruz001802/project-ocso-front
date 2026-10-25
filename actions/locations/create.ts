@@ -1,8 +1,8 @@
 'use server';
-import axios from "axios";
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { TOKEN_NAME, API_URL } from "../../constants";
+import { AuthHeaders } from "@/helpers/authHeaders";
 
 export async function createLocation(formData: FormData) {
   const token = (await cookies()).get(TOKEN_NAME)?.value;
@@ -27,8 +27,16 @@ export async function createLocation(formData: FormData) {
     location.manager = { managerId: location.manager };
   }
 
-  await axios.post(`${API_URL}/locations`, { ...location }, {
-    headers: { Authorization: `Bearer ${token}` },
+  const response = await fetch(`${API_URL}/locations`, {
+    method: "POST",
+    body: JSON.stringify(location),
+    headers: {
+      "Content-Type": "application/json",
+      ...(await AuthHeaders()),
+    },
   });
-  revalidatePath("/dashboard");
+
+  if (response.status === 201) {
+    revalidateTag("dashboard:locations", "max");
+  }
 }

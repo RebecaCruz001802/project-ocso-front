@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import axios from "axios";
 import Link from "next/link";
 import { API_URL, TOKEN_NAME } from "../../../constants";
 import { Location } from "../../../entities";
@@ -10,14 +9,16 @@ export default async function LocationCard({
 }: {
   store: string | string[] | undefined;
 }) {
-  if (typeof store !== "string") return null;
-
-  
-  const { data } = await axios.get<Location>(`${API_URL}/locations/${store}`, {
+  if (!store) return null;
+  const response = await fetch(`${API_URL}/locations/${store}`, {
     headers: {
-  ...(await AuthHeaders()),
-},
+      ...(await AuthHeaders())
+    },
+    next: {
+      tags: ["dashboard:locations", `dashboard:locations:${store}`]
+    }
   });
+  const data: Location = await response.json()
 
   return (
     <div className="bg-white rounded-xl shadow-md">

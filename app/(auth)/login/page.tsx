@@ -1,34 +1,32 @@
 'use client';
 import Link from "next/link";
 import { Input, Button, Spinner } from "@nextui-org/react";
-import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 const API_URL = 'http://localhost:4000';
 export default function LoginPage() {
-  
 
 const [submitting, setSubmitting] = useState(false)
 const router =  useRouter()
-const handleSubmit = async (e : React.FormEvent) => {
+const handleSubmit = async (e : any) => {
   setSubmitting(true);
 e.preventDefault()
-const formData = new FormData(e.target as HTMLFormElement);
+const formData = new FormData(e.target);
 let authData: any = {};
 authData.userEmail = formData.get("userEmail");
 authData.userPassword = formData.get("userPassword");
 try {
-const response = await axios.post(`${API_URL}/auth/login`, { ...authData }, { withCredentials: true });
-
-
-if (response.status === 201) router.push('/dashboard')
-setSubmitting(false)
-}catch (e) {
-   
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    body: JSON.stringify(authData),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+  if (response.status === 201) router.push('/dashboard')
+  setSubmitting(false)
+} catch (e) {
   setSubmitting(false);
 }
-
-return;
 }
   return (
     <form className="bg-orange-500 px-10 py-2 rounded-md" onSubmit={handleSubmit}>

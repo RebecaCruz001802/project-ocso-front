@@ -1,29 +1,32 @@
-
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import axios from "axios";
 import { cookies } from "next/headers";
 import { createLocation } from "@/actions/locations/create";
 import { API_URL, TOKEN_NAME } from "../../../constants";
+import { Manager, Location } from "../../../entities";
+import { AuthHeaders } from "@/helpers/authHeaders";
 import SelectManager from "./SelectManagers";
 
-export default async function FormNewLocation({
-  store,
-}: {
-  store: string | string[] | undefined;
-}) {
+export default async function FormNewLocation({ store }: { store: string | string[] | undefined }) {
   if (store) return null;
-  const token = (await cookies()).get(TOKEN_NAME)?.value;
-  const responseManagers = await axios.get(`${API_URL}/managers`, {
+  const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      ...(await AuthHeaders()),
+    },
+    next: {
+      tags: ["dashboard:managers"],
+    },
   });
-  const responseLocation = await axios.get(`${API_URL}/locations`, {
+  const dataManagers: Manager[] = await responseManagers.json();
+  const responseLocations = await fetch(`${API_URL}/locations`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      ...(await AuthHeaders()),
+    },
+    next: {
+      tags: ["dashboard:locations"],
+    },
   });
+  const dataLocations: Location[] = await responseLocations.json();
 
   return (
     <form action={createLocation} className="bg-orange-400 py-2 px-4 flex flex-col gap-6 w-full rouneded-1g">
@@ -32,8 +35,8 @@ export default async function FormNewLocation({
     <Input label="Dirección" placeholder="Av De La Luz S/N" name="locationAddress" />
     <Input label="Latitud" placeholder="-120" name="locationLat"  />
     <Input label="Longitud" placeholder="20" name="locationLng"  />
-      <SelectManager managers={responseManagers.data} locations={responseLocation.data} />
-      <Button type="submit"color="primary"> Subir </Button>
+      <SelectManager managers={dataManagers} locations={dataLocations} />
+      <Button type="submit" color="primary"> Subir </Button>
     </form>
   );
 }

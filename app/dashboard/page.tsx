@@ -12,7 +12,7 @@ console.log("store:", store);
       {typeof store === "string" ? (
         <EmployeesLocation store={store} />
       ) : (
-        <p className="text-2xl px-10 my-10">
+       <p className="text-2xl px-10 my-10 text-center">
           Selecciona una tienda para ver los empleados
         </p>
       )}

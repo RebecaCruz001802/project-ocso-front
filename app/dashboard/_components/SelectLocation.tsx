@@ -15,7 +15,7 @@ export default function SelectLocation({
   const router = useRouter();
 
  
-  const selected = typeof store === "string" ? [store] : [];
+ const selected = typeof store === "string" ? [store] : ["0"];
 
   return (
     <Select

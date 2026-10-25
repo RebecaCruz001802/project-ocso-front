@@ -22,10 +22,10 @@ export default async function FormNewLocation() {
 
   return (
     <form action={createLocation}>
-    <Input label="Nombre" placeholder=" " name="locationName" defaultValue="Ocso Jurikiya" />
-<Input label="Dirección" placeholder=" " name="locationAddress" defaultValue="Av De La Luz S/N" />
-<Input label="Latitud" placeholder=" " name="locationLat" defaultValue="-120" />
-<Input label="Longitud" placeholder=" " name="locationLng" defaultValue="20" />
+    <Input label="Nombre" placeholder="Ocso Jurikiya" name="locationName" />
+<Input label="Dirección" placeholder="Av De La Luz S/N" name="locationAddress" />
+<Input label="Latitud" placeholder="-120" name="locationLat"  />
+<Input label="Longitud" placeholder="20" name="locationLng"  />
       <SelectManager managers={responseManagers.data} locations={responseLocation.data} />
       <Button type="submit"> Subir </Button>
     </form>

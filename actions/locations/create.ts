@@ -34,9 +34,10 @@ export async function createLocation(formData: FormData) {
       "Content-Type": "application/json",
       ...(await AuthHeaders()),
     },
-  });
-
+  })
+const { locationId }: Location = await response.json()
   if (response.status === 201) {
-    revalidateTag("dashboard:locations", "max");
+    revalidateTag("dashboard:locations");
+    redirect(`/dashboard?store=${locationId}`)
   }
 }

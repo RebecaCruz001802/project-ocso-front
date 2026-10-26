@@ -14,5 +14,6 @@ export default async function deleteLocation(formData: FormData) {
       ...(await AuthHeaders()),
     },
   });
-  revalidateTag("dashboard:locations", "max");
+  revalidateTag("dashboard:locations");
+redirect("/dashboard")
 }

@@ -5,6 +5,8 @@ import LocationCard from "../_components/LocationCard";
 import FormNewLocation from "../_components/FormNewLocation";
 import { API_URL } from "@/constants";
 import DeleteLocationButton from "../_components/DeleteLocationButton";
+import UpdateLocation from "../_components/UpdateLocation";
+import FormUpdateLocation from "../_components/FormUpdateLocation";
 import { AuthHeaders } from "@/helpers/authHeaders";
 
 const LocationsPage = async ({
@@ -48,6 +50,11 @@ const LocationsPage = async ({
         <FormNewLocation store={store}/>
         </div>
         <DeleteLocationButton store={store}/>
+        {store && (
+          <UpdateLocation>
+            <FormUpdateLocation store={store}/>
+          </UpdateLocation>
+        )}
       </div>
     </div>
   );

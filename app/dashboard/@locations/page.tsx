@@ -49,12 +49,12 @@ const LocationsPage = async ({
         <div className="w-6/12">
         <FormNewLocation store={store}/>
         </div>
+        <div className="flex flex-row flex-grow-0 gap-10 items-center">
         <DeleteLocationButton store={store}/>
-        {store && (
-          <UpdateLocation>
+          <UpdateLocation store={store}>
             <FormUpdateLocation store={store}/>
           </UpdateLocation>
-        )}
+        </div>
       </div>
     </div>
   );

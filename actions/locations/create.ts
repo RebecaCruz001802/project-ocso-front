@@ -1,7 +1,9 @@
 'use server';
 import { cookies } from "next/headers";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { TOKEN_NAME, API_URL } from "../../constants";
+import { Location } from "../../entities";
 import { AuthHeaders } from "@/helpers/authHeaders";
 
 export async function createLocation(formData: FormData) {
@@ -35,9 +37,9 @@ export async function createLocation(formData: FormData) {
       ...(await AuthHeaders()),
     },
   })
-const { locationId }: Location = await response.json()
+  const { locationId }: Location = await response.json()
   if (response.status === 201) {
-    revalidateTag("dashboard:locations");
+    revalidateTag("dashboard:locations", "max");
     redirect(`/dashboard?store=${locationId}`)
   }
 }

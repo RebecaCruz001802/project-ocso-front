@@ -8,10 +8,10 @@ const disabledStores = stores.map((store: Location) => {
   }
 }).filter((storeId) => storeId !== undefined)
 return (
-  <Select label="Tienda" name="location" defaultSelectedKeys={defaultStore ? [defaultStore] : undefined} disabledKeys={disabledStores}>
+  <Select label="Tienda" name="location" defaultSelectedKeys={defaultStore ? [String(defaultStore)] : undefined} disabledKeys={disabledStores}>
     {
       stores.map((store: Location) => (
-        <SelectItem key={store.locationId}>
+        <SelectItem key={String(store.locationId)}>
           {store.locationName}
         </SelectItem>
       ))

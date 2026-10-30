@@ -1,22 +1,24 @@
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
+"use client"
+
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Manager } from "@/entities"
 import Link from "next/link";
+
 export default function ManagerCard({ manager }: { manager: Manager }) {
    return (
-    <Card className="mx-20 py-2 text center">
+    <Card className="mx-10 py-2 text-center">
       <CardHeader>
-        <p className="w-full">
-          <b className="text-4x1"></b>
-          Nombre: <b>{manager.managerFullName}</b>
-        </p>
-      </CardHeader>
+  <p className="w-full">
+    <b className="text-4xl">{manager.managerFullName}</b>
+  </p>
+</CardHeader>
       <Divider />
-     <CardBody className="flex flex-row flex-grow-0">
-  <div className="flex flex-col bg-red-100 w-full">
-        <p className="w-full">
-          Email: <b>{manager.managerEmail}</b>
-        </p>
+    <CardBody className="flex flex-row flex-grow-0 items-center gap-6">
+  <div className="flex flex-col w-full">
+       <p className="w-full break-all">
+  Email: <b>{manager.managerEmail}</b>
+</p>
         <p className="w-full">
           Teléfono: <b>{manager.managerPhoneNumber}</b>
         </p>

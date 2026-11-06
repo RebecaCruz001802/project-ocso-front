@@ -9,7 +9,7 @@ export default function FormNewProvider() {
       <Input required={true} label="Nombre" placeholder="Pepsico" name="providerName" />
       <Input required={true} label="Correo electrónico" placeholder="pepsico@business.com" name="providerEmail" />
       <Input required={true} label="Teléfono" placeholder="4421333617" name="providerPhoneNumber" />
-      <Button type="submit" color="primary"> Subir </Button>
+      <Button type="submit" color="primary"> Craer Proveedor </Button>
     </form>
   );
 }

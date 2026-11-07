@@ -2,7 +2,7 @@
 
 import { API_URL } from "@/constants";
 import { AuthHeaders } from "@/helpers/authHeaders";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export default async function createProvider(formData: FormData) {
   let provider: any = {};
@@ -17,5 +17,5 @@ export default async function createProvider(formData: FormData) {
       "content-type": "application/json",
     },
   });
-  if (response.status === 201) revalidateTag("dashboard:providers", "max");
+  if (response.ok) updateTag("dashboard:providers");
 }
